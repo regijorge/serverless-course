@@ -1,5 +1,7 @@
 import AWS from 'aws-sdk'
 import commonMiddleware from '../lib/commonMiddleware'
+import validator from '@middy/validator'
+import getAuctionsSchema from '../lib/schemas/getAuctionsSchema'
 import createError from 'http-errors'
 
 const dynamodb = new AWS.DynamoDB.DocumentClient()
@@ -35,3 +37,4 @@ async function getAuctions(event, context) {
 }
 
 export const handler = commonMiddleware(getAuctions)
+  .use(validator({ inputSchema: getAuctionsSchema, useDefaults: true }))
