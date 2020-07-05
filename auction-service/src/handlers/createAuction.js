@@ -2,6 +2,8 @@ import { v4 as uuid } from 'uuid'
 import AWS from 'aws-sdk'
 import commonMiddleware from '../lib/commonMiddleware'
 import createError from 'http-errors'
+import validator from '@middy/validator'
+import schema from '../lib/schemas/createAuctionSchema'
 
 const dynamodb = new AWS.DynamoDB.DocumentClient()
 
@@ -39,3 +41,4 @@ async function createAuction(event, context) {
 }
 
 export const handler = commonMiddleware(createAuction)
+  .use(validator({ inputSchema: schema }))
