@@ -5,7 +5,7 @@ import createError from 'http-errors'
 async function processAuctions(event, context) {
   try {
     const auctionsToBeClosed = await getEndedAuctions()
-    const closePromises = auctionsToBeClosed.map(auction => closeAuction(auction.id))
+    const closePromises = auctionsToBeClosed.map(auction => closeAuction(auction))
     await Promise.all(closePromises)
 
     return { closed: closePromises.length }
